@@ -119,6 +119,10 @@ class ResourceDownloadMixin:
         if hasattr(self, 'filter_class'):
             if self.filter_class:
                 qs = self.filter_class(self.request.GET, queryset=qs).qs
+        if hasattr(self, 'filterset_class'):
+            if self.filterset_class:
+                qs = self.filterset_class(self.request.GET, queryset=qs).qs
+                print(len(qs))
         resource_class = self._get_ressource_classes()[resource_class_number]
         export = resource_class().export(qs)
         r = getattr(export, selected_format.__name__.lower())
